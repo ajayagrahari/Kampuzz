@@ -21,7 +21,7 @@ class General {
 
         return $html;
     }
-    
+
     public static function commafy($parts){
         $str='';
         for($i=0;$i<count($parts);$i++){

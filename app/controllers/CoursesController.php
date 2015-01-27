@@ -50,6 +50,7 @@ class CoursesController extends BaseController {
         return View::make('courses.index', compact('courseColleges', 'collegeList', 'course_name'));
     }
 
+
     public function detail($id, $slug = NULL)
     {
         $course = Course::where('course_id', '=', $id)->first();
