@@ -27,7 +27,7 @@ class CoursesAbroadController extends \BaseController {
         {
             $arr[] = $child_course['course_id'];
         }
-//return $arr;
+
         $courses = AbroadCourse::with('eligibility')
             ->whereIn('parent_course_id', $arr)
             ->where('has_detail', '=', 1)
