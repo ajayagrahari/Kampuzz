@@ -1,5 +1,5 @@
 <?php
-
+use \Input ;
 class CoursesController extends BaseController {
 
     public function __construct()
@@ -9,6 +9,9 @@ class CoursesController extends BaseController {
 
     public function index($id, $slug = NULL, $parent_cat_id = NULL)
     {
+        $location = Input::get('location') ;
+        $fees = Input::get('fees') ;
+        //$selected_city=isset($location)?$location:NULL;
 
         $course_name = Course::where('course_id', '=', $id)->first();
         if ((int)$parent_cat_id > 0)
@@ -23,10 +26,24 @@ class CoursesController extends BaseController {
             $arr[] = $child_course['course_id'];
         }
 
-          $courseColleges = Course::whereIn('parent_course_id', $arr)
-            ->groupBy('college_id')
-            ->paginate(Config::get('view.results_per_page'));
+          $query = Course::whereIn('courses.parent_course_id', $arr)
+                            ->join('college_master','college_master.college_id','=','courses.college_id') 
+                            ->join('course_details','course_details.course_id','=','courses.course_id');
+        
+        if($location) {
+            
+            $query->whereIn('college_master.city_name', $location) ;
+        }
+        if($fees){
+           
+            $query->where('course_details.total_fee','<=',$fees) ;
+        }
+        
+        $courseColleges  = $query->groupBy('courses.college_id')
+                                 ->paginate(Config::get('view.results_per_page'));
 
+            
+            
         $i = 0;
         foreach ($courseColleges as $courseCollege)
         {
@@ -46,8 +63,10 @@ class CoursesController extends BaseController {
             $collegeList[$i]['affiliation'] = isset($courseCollege->detail->affiliation) ? $courseCollege->detail->affiliation : NULL;
             $i++;
         }
-
-        return View::make('courses.index', compact('courseColleges', 'collegeList', 'course_name'));
+        
+       
+        $city=City::take(5)->get();
+        return View::make('courses.index', compact('courseColleges', 'collegeList', 'course_name','city'));
     }
 
 
