@@ -163,12 +163,11 @@
 
 
                 <!-- Upcoming Widget Start -->
-
-                <article class="">
+ <article class="">
 
 
                     <figure><a class='fa fa-hover' href='choosing-the-paths-of-life/index.html'><img
-                                    src='uploads/2014/01/02-stat-fort-uni-150x150.jpg' alt='' width='60'></a></figure>
+                                    src="{{ URL::asset('uploads/2014/01/02-stat-fort-uni-150x150.jpg') }}" alt='' width='60'></a></figure>
 
 
                     <div class="text">
@@ -190,7 +189,7 @@
 
 
                     <figure><a class='fa fa-hover' href='whats-up-with-the-microbiologoy/index.html'><img
-                                    src='uploads/2014/01/03-stat-fort-uni-150x150.jpg' alt='' width='60'></a></figure>
+                                    src="{{ URL::asset('uploads/2014/01/03-stat-fort-uni-150x150.jpg') }}" alt='' width='60'></a></figure>
 
 
                     <div class="text">
@@ -212,7 +211,7 @@
 
 
                     <figure><a class='fa fa-hover' href='stuyding-music-at-academy/index.html'><img
-                                    src='uploads/2014/01/04-stat-fort-uni-150x150.jpg' alt='' width='60'></a></figure>
+                                    src="{{ URL::asset('uploads/2014/01/04-stat-fort-uni-150x150.jpg') }}" alt='' width='60'></a></figure>
 
 
                     <div class="text">
@@ -226,6 +225,7 @@
 
 
                 </article>
+
 
 
                 <!-- Recent Posts End -->
