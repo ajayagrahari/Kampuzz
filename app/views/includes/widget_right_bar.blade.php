@@ -10,9 +10,36 @@ $citylist = City::groupBy('city_group')->orderBy('k_city_id')->take(10)->skip(0)
 			</header>
 			<form action="">
 			<h4>Location</h4>
+			<?php
+            $checked='';
+            $checked1=array();
+            
+            
+            
+            foreach ($citylist as $key => $value) {
+            if(!empty($_GET['location'])){
+                if(in_array("all", $_GET['location'])) {
+                    $checked="checked";
+                    }
+                 if(in_array($value->city_group, $_GET['location'])) {
+                        $checked1[$value->city_group]="checked";
+                 }
+                 else{
+                    $checked1[$value->city_group]='';
+                 }
+                }
+                 else{
+                    $checked1[$value->city_group]='';
+                 }
+            }
+        
+            
+
+        
+            ?>
 			<ul class="category_filter">
 				<li>
-					<input id="technology" type="checkbox" class="bp-course-category-filter" name="location" value=""> 
+					<input id="checkall" type="checkbox" <?php echo $checked; ?> class="bp-course-category-filter" name="location" value="all"> 
 					<label for="technology">All</label>
 				</li>
 				
@@ -20,7 +47,7 @@ $citylist = City::groupBy('city_group')->orderBy('k_city_id')->take(10)->skip(0)
 					foreach($citylist as $key=>$city) {
 				?>
 				<li>
-					<input id="city_<?php echo $key ?>" type="checkbox" class="bp-course-category-filter" name="location[]" value="<?php echo $city->city_group ?>"> 
+					<input id="city_<?php echo $key ?>" type="checkbox" <?php echo $checked1[$city->city_group]; ?> class="chkbox bp-course-category-filter" name="location[]" value="<?php echo $city->city_group ?>"> 
 					<label for="technology"><?php echo $city->city_group ?></label>
 				</li>
 
@@ -29,17 +56,35 @@ $citylist = City::groupBy('city_group')->orderBy('k_city_id')->take(10)->skip(0)
 			</ul>
 
 			<h4>Total Fees(INR)</h4>
+			<?php
+            $radiochecked1='';
+            $radiochecked2='';
+            $radiochecked3='';
+            if(!empty($_GET['fees'])) {
+            
+            if($_GET['fees']=='100000') {
+                    $radiochecked1="checked";
+            }
+            if($_GET['fees']=='200000') {
+                    $radiochecked2="checked";
+            }
+            if($_GET['fees']=='300000') {
+                    $radiochecked3="checked";
+            }
+        }
+        
+            ?>
 			<ul class="type_filter">
 				<li>
-					<input id="all" type="radio" class="bp-course-free-filter" name="fees" value="100000"> 
+					<input id="all" type="radio" <?php echo $radiochecked1; ?> class="bp-course-free-filter" name="fees" value="100000"> 
 					<label for="all">Maximum 1 Lakh</label>
 				</li>
 				<li>
-					<input id="free" type="radio" class="bp-course-free-filter" name="fees" value="200000">
+					<input id="free" type="radio" <?php echo $radiochecked2; ?> class="bp-course-free-filter" name="fees" value="200000">
 					 <label for="free">Maximum 2 Lakh</label>
 				</li>
 				<li>
-					<input id="paid" type="radio" class="bp-course-free-filter" name="fees" value="300000"> 
+					<input id="paid" type="radio" <?php echo $radiochecked3; ?> class="bp-course-free-filter" name="fees" value="300000"> 
 					<label for="paid">Maximum 3 Lakh</label>
 				</li>
 			</ul>
@@ -71,3 +116,10 @@ $citylist = City::groupBy('city_group')->orderBy('k_city_id')->take(10)->skip(0)
 		</div>
 	</div>
 
+ <script>
+            
+                $("#checkall").on('click',function() {
+                    $('.chkbox').prop('checked', this.checked);
+                });
+            
+        </script>

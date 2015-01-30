@@ -19,8 +19,8 @@
 								<img  src="{{ URL::asset('uploads/2014/01/01-stat-fort-uni-980x408.jpg') }}">
 								<!-- <img  src="http://sevillespain.info/wp-content/uploads/2012/02/Casa-De-Carmona-Hotel-Seville-casa_de_carmona_galeria_mr_1200-500x332.jpg"> -->
 								<img  src="{{ URL::asset('uploads/2014/01/02-stat-fort-uni-980x408.jpg') }}">
-        							 <img  src="{{ URL::asset('uploads/2014/01/03-stat-fort-uni-980x408.jpg') }}">
-                						<img  src="{{ URL::asset('uploads/2014/01/06-stat-fort-uni-980x408.jpg') }}">
+                <img  src="{{ URL::asset('uploads/2014/01/03-stat-fort-uni-980x408.jpg') }}">
+                <img  src="{{ URL::asset('uploads/2014/01/06-stat-fort-uni-980x408.jpg') }}">
 							
 								
 							</div>
