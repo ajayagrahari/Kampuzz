@@ -1,5 +1,7 @@
 <?php $breadcrumb_t = $course->course_name;
-$breadcrumb_p = $course->college->college_name . ', ' . $course->college->city_name; ?>
+$breadcrumb_p = $course->college->college_name . ', ' . $course->college->city_name; 
+$college_detail_url=route('college',['slug' => Str::slug($course->college->college_name . '-' . $course->college->city_name),'id'=>$course->college->college_id]);
+?>
 @extends('layouts.main')
 @section('content')
     <!-- Row Start -->
@@ -166,6 +168,7 @@ $breadcrumb_p = $course->college->college_name . ', ' . $course->college->city_n
                 </li>
                 <?php } ?>
                 <li><a class="btn cs-buynow cs-bgcolr bgcolr" href="#">Request Contact Info</a></li>
+                <li><a class="btn cs-buynow cs-bgcolr bgcolr" href="<?php echo $college_detail_url; ?>">View All Courses in the college</a></li>
             </ul>
         </div>
 

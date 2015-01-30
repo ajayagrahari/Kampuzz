@@ -2,7 +2,11 @@
 <?php if ($course_name)
 {
     $breadcrumb_t = $course_name->course_name;
-} ?>
+
+    $specialization_filter = $course_name->hasSpecialization->toArray() ;
+} 
+   
+?>
 
 @section('content')
 
@@ -17,7 +21,6 @@
                 <div class="event eventlisting">
 
                     <?php
-                    if(!empty($collegeList)){
                     for ($i = 0; $i < count($collegeList);$i++){
                     $detail_url = route('courses.detail', ['slug' => Str::slug($collegeList[$i]['college_name'] . '-' . $collegeList[$i]['course_name']), 'id' => $collegeList[$i]['course_id']]);
                     ?>
@@ -85,7 +88,7 @@
                     </article>
 
 
-                    <?php } } ?>
+                    <?php } ?>
 
 
                 </div>
@@ -95,100 +98,17 @@
             </div>
         </div>
 
-
-        <aside class="col-md-3">
-    <div class="widget">
-        <div class="course_filters">
-            <form action="">
-            <h4>Location</h4>
-            <?php
-            $checked='';
-            $checked1=array();
-            
-            
-            
-            foreach ($city as $key => $value) {
-            if(!empty($_GET['location'])){
-                if(in_array("all", $_GET['location'])) {
-                    $checked="checked";
-                    }
-                 if(in_array($value->city_name, $_GET['location'])) {
-                        $checked1[$value->city_name]="checked";
-                 }
-                 else{
-                    $checked1[$value->city_name]='';
-                 }
-                }
-                 else{
-                    $checked1[$value->city_name]='';
-                 }
-            }
-        
-            
-
-        
-            ?>
-            <ul class="category_filter">
-                <li>
-                    <input id="checkall" type="checkbox" <?php echo $checked; ?> class="bp-course-category-filter" name="location[]" value="all"> 
-                    <label for="technology">All</label>
-                </li>
-               
-                <?php
-                foreach ($city as $c_key => $c_value) {
-                    
-            
-                 ?>
-                <li>
-                    <input id="" type="checkbox" <?php echo $checked1[$c_value->city_name]; ?> class="chkbox bp-course-category-filter" name="location[]" value="<?php echo $c_value->city_name; ?>"> 
-                    <label for="technology"><?php echo $c_value->city_name; ?></label>
-                </li>
-                <?php } ?>
-                
-            </ul>
-            
-            <h4>Total Fees(INR)</h4>
-            <?php
-            $radiochecked1='';
-            $radiochecked2='';
-            $radiochecked3='';
-            if(!empty($_GET['fees'])) {
-            
-            if($_GET['fees']=='100000') {
-                    $radiochecked1="checked";
-            }
-            if($_GET['fees']=='200000') {
-                    $radiochecked2="checked";
-            }
-            if($_GET['fees']=='500000') {
-                    $radiochecked3="checked";
-            }
-        }
-        
-            ?>
-            <ul class="type_filter">
-                <li>
-                    <input id="all" type="radio" <?php echo $radiochecked1; ?> class="bp-course-free-filter" name="fees" value="100000"> 
-                    <label for="all">Maximum 1 Lakh</label>
-                </li>
-                <li>
-                    <input id="free" type="radio" <?php echo $radiochecked2; ?> class="bp-course-free-filter" name="fees" value="200000">
-                     <label for="free">Maximum 2 Lakh</label>
-                </li>
-                <li>
-                    <input id="paid" type="radio" <?php echo $radiochecked3; ?> class="bp-course-free-filter" name="fees" value="500000"> 
-                    <label for="paid">Maximum 5 Lakh</label>
-                </li>
-            </ul>
+        <div class="col-md-3 col-sm-4">
 
             
-            <input type="submit" id="submit_filters" name="submit_filters" value="Filter" class="btn btn-default" />
-            </form>
+
+             @include('includes.widget_right_bar')
+
+           
         </div>
-    </div>
 
     </div>
     <!-- Row End -->
-       
+
 
 @stop

@@ -23,6 +23,13 @@ body {
 	-moz-font-smoothing: antialiased;
 	-webkit-text-stroke: 1px rgba(0,0,0,0.10);
 }
+
+.fadein { 
+position:relative; height:300px; width:70%; margin:0 auto;
+
+ }
+.fadein img { position:absolute;}
+
 a {
 	color: #000;
 	text-decoration: none;
@@ -2121,7 +2128,7 @@ Course Detail Page Start
 }
 .addmition-info{
 	margin:8px 0 0 14px;
-	width:228px;
+	width: 320px;
 	float:right;
 	font-size:12px;
 	color:#333;

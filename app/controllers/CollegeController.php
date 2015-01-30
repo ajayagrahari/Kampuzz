@@ -8,9 +8,33 @@ class CollegeController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($id, $slug = NULL)
 	{
-		//
+		 $college_details = College::where('college_id', '=', $id)->first();
+		
+		  $i = 0;
+        $collegeFeature = [] ;
+        foreach ($college_details->features as $feature)
+        {
+            $collegeFeature[$i]['feature_title'] = isset($feature->feature_title) ? $feature->feature_title : NULL;
+            $collegeFeature[$i]['feature_content'] = isset($feature->feature_content) ? $feature->feature_content : NULL;
+           
+            $i++;
+        }
+        $j = 0;
+        $collegeCourse = [] ;
+        foreach ($college_details->courses as $course)
+        {
+            $collegeCourse[$j]['course_id'] = isset($course->course_id) ? $course->course_id : NULL;
+            $collegeCourse[$j]['course_name'] = isset($course->course_name) ? $course->course_name : NULL;
+            $collegeCourse[$j]['course_duration'] = isset($course->course_duration) ? $course->course_duration : NULL;
+           
+            $j++;
+        }
+        // echo "<pre>";
+        // print_r($collegeCourse);
+        // exit();
+		 return View::make('college.detail', compact('college_details','collegeCourse','collegeFeature'));
 	}
 
 

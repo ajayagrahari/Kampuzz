@@ -6,7 +6,7 @@ class College extends \Eloquent {
 	protected $fillable = [];
 
 	public function courses(){
-		$this->hasMany('Course');
+		return $this->hasMany('Course');
 	}
 
 	public function recruiters()

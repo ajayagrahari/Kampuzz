@@ -1,5 +1,5 @@
 <?php
-use \Input ;
+
 class CoursesController extends BaseController {
 
     public function __construct()
@@ -9,11 +9,10 @@ class CoursesController extends BaseController {
 
     public function index($id, $slug = NULL, $parent_cat_id = NULL)
     {
-        $location = Input::get('location') ;
-        $fees = Input::get('fees') ;
-        //$selected_city=isset($location)?$location:NULL;
 
         $course_name = Course::where('course_id', '=', $id)->first();
+
+        
         if ((int)$parent_cat_id > 0)
         {
             $child_courses = Course::where('parent_course_id', '=', $parent_cat_id)->get()->toArray();
@@ -26,25 +25,42 @@ class CoursesController extends BaseController {
             $arr[] = $child_course['course_id'];
         }
 
-          $query = Course::whereIn('courses.parent_course_id', $arr)
-                            ->join('college_master','college_master.college_id','=','courses.college_id') 
-                            ->join('course_details','course_details.course_id','=','courses.course_id');
+       
+        $filter = Input::all();
+        // if(Input::has('submit_filters') && $filter['submit_filters'] == 'Filter') {
+            $select_cities = Input::has('location')? City::whereIn('city_group',$filter['location'])->lists('city_name') : [] ;
+            $fees = Input::has('fees') ? $filter['fees'] : null ;
+            $specialization = Input::has('specialization') ? $filter['specialization'] : null ;
+       // }
+
+        $query = Course::whereIn('courses.parent_course_id', $arr)
+                            ->join('college_master','college_master.college_id','=','courses.college_id') ;
         
-        if($location) {
-            
-            $query->whereIn('college_master.city_name', $location) ;
+        if($select_cities) {
+
+           $query =  $query->where(function($query){
+                $select_cities = Input::has('location')? City::whereIn('city_group',Input::get('location'))->lists('city_name') : [] ;
+
+                foreach($select_cities as $key=>$city ) {
+                   $query->orWhere('college_master.city_name','like',"%".$city."%") ;
+                }
+            }) ;
         }
-        if($fees){
-           
+
+        if($fees) {
+            $query->join('course_details','course_details.course_id','=','courses.course_id') ;
             $query->where('course_details.total_fee','<=',$fees) ;
         }
-        
-        $courseColleges  = $query->groupBy('courses.college_id')
-                                 ->paginate(Config::get('view.results_per_page'));
 
-            
-            
+        if($specialization) {
+           $query->where('courses.course_name','like',"%{$specialization}%") ;
+        }
+        
+        $courseColleges  =   $query->groupBy('courses.college_id')
+                            ->paginate(Config::get('view.results_per_page'));
+
         $i = 0;
+        $collegeList = [] ;
         foreach ($courseColleges as $courseCollege)
         {
             $collegeList[$i]['course_id'] = isset($courseCollege->course_id) ? $courseCollege->course_id : NULL;
@@ -63,15 +79,13 @@ class CoursesController extends BaseController {
             $collegeList[$i]['affiliation'] = isset($courseCollege->detail->affiliation) ? $courseCollege->detail->affiliation : NULL;
             $i++;
         }
-        
-       
-        $city=City::take(5)->get();
-        return View::make('courses.index', compact('courseColleges', 'collegeList', 'course_name','city'));
+
+        return View::make('courses.index', compact('courseColleges', 'collegeList', 'course_name'));
     }
 
 
-    public function detail($id, $slug = NULL)
-    {
+    public function detail($id, $slug = NULL) {
+
         $course = Course::where('course_id', '=', $id)->first();
 
         return View::make('courses.detail', compact('course'));
