@@ -49,7 +49,20 @@
                   <table class="table table-bordered">
                     
                     <tbody><tr>
-                      <td class="well" width="30%" colspan="2"><h4> <?php echo $value['course_name']; ?> </h4></td>
+                      <td class="well" width="30%" colspan="2"><h4> <?php echo $value['name']; ?> </h4>
+                         <ul><?php foreach ($value['child'] as $key1 => $value1) { ?>
+                         <li><b><?php echo $value1['name']; ?> </b>
+                            <ul>
+                              <?php foreach ($value1['sub_child'] as $key2 => $value2) { ?>
+                              <li><?php echo $value2['name'].",".$value2['duration']; ?>
+                              <?php } ?>
+                            </ul>
+
+                         </li>
+
+                         <?php } ?>
+                       </ul>
+                      </td>
                     </tr>
                     <!--  <tr>
                       <td class="well" width="30%"><strong> Course Name </strong></td>
@@ -59,10 +72,7 @@
                       <td class="well" width="30%"><strong> Total Fees </strong></td>
                       <td><?php //echo $value->fees; ?> </td>                      
                     </tr> -->
-                    <tr>
-                     <td class="well" width="30%"><strong> Duration </strong></td>
-                      <td><?php echo $value['course_duration']; ?></td>
-                    </tr>
+                    
                                        
                   </tbody>
 
@@ -150,6 +160,17 @@
            
         </div>
 
+<<<<<<< .merge_file_pZHU6A
+
+<script>
+$(function(){
+  $('.fadein img:gt(0)').hide();
+  setInterval(function(){$('.fadein :first-child').fadeOut().next('img').fadeIn().end().appendTo('.fadein');}, 3000);
+});
+</script>
+
+        @stop
+=======
 <script>
 $(function(){
 	$('.fadein img:gt(0)').hide();
@@ -157,3 +178,4 @@ $(function(){
 });
 </script>
         @stop
+>>>>>>> .merge_file_1ZRbWC
