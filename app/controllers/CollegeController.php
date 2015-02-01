@@ -15,7 +15,7 @@ class CollegeController extends \BaseController {
 
 		//return $college_details=College::where('college_id', '=', $id)->with('courses')->get()->toArray();
 		 $college_details = College::where('college_id', '=', $id)->first();
-		 $collegeCourse=self::CourseGroup($id,0);
+		 // $collegeCourse=self::CourseGroup($id,0);
 		// echo "<pre>";
 		// print_r($collegeCourse);
 		// exit();
@@ -28,6 +28,54 @@ class CollegeController extends \BaseController {
            
             $i++;
         }
+
+        $courseGroup = array();
+        foreach ($college_details->courses as $item)
+        {
+        	if($item->parent_course_id!=0){
+            $courseGroup[] = ['id' => $item->course_id, 'name' => $item->course_name, 'parent' => self::CourseGroupList($item->parent_course_id)];
+        }
+        else{
+        	//$courseGroup[] = ['id' => $item->course_id, 'name' => $item->course_name];
+        }
+    }
+  
+$data=array();
+$data1=array();
+    foreach ($courseGroup as $key => $value) {
+    	$data1[$value['parent']['id']]['child'][$value['id']]=$value['name'];
+    	$data1[$value['parent']['id']]['name']=$value['parent']['name'];
+    	foreach ($data1 as $key1 => $value1) {
+    		
+    	}
+    	if(!isset($value['parent']['parent'])){
+    		$data[$value['parent']['id']]=$data1;
+    	}
+    	else{
+    		foreach ($data1 as $key1 => $value1) {
+    			if ($key1==$value['parent']['id']) {
+    				$data[$value['parent']['parent']['id']]['child'][$key1]=$value1;
+    	$data[$value['parent']['parent']['id']]['name']=$value['parent']['parent']['name'];
+    
+    			}
+    		}
+    		
+    	}
+    	}
+    	 
+    // foreach ($courseGroup as $key1 => $value1) {
+    // 	if(!isset($value1['parent']['parent'])){
+    // 		$data[$value1['parent']['id']]=$data1;
+    // 	}
+    // 	else{
+    // 		$data[$value1['parent']['parent']['id']]['child']=$data1;
+    // 	$data[$value1['parent']['parent']['id']]['name']=$value1['parent']['parent']['name'];
+    
+    // 	}
+    // }
+    //  echo "<pre>";
+    // print_r($data);
+    // exit();
         // $j = 0;
         // $collegeCourse = [] ;
         // foreach ($college_details->courses as $course)
@@ -39,43 +87,27 @@ class CollegeController extends \BaseController {
         //     $j++;
         // }
         
-		 return View::make('college.detail', compact('college_details','collegeCourse','collegeFeature'));
+		 return View::make('college.detail', compact('college_details','data','collegeFeature'));
 	}
 
-	 public static function CourseGroup($college_id,$parent_id)
+	
+     public static function CourseGroupList($parent_id)
     {
-        $items = Course::where('parent_course_id', '=', $parent_id)->where('college_id','=',$college_id)->orderBy('sort', 'DESC')->get();
+        $items = Course::where('course_id', '=', $parent_id)->orderBy('sort', 'DESC')->get();
         $courseGroup = array();
         foreach ($items as $item)
         {
-            $courseGroup[] = ['id' => $item->course_id, 'name' => $item->course_name, 'child' => self::CourseGroupList($college_id,$item->course_id)];
+            if($item->parent_course_id!=0){
+            $courseGroup = ['id' => $item->course_id, 'name' => $item->course_name, 'parent' => self::CourseGroupList($item->parent_course_id)];
         }
+        else{
+        	$courseGroup = ['id' => $item->course_id, 'name' => $item->course_name];
+        }
+    }
 
         return $courseGroup;
     }
-     public static function CourseGroupList($college_id,$parent_id)
-    {
-        $items = Course::where('parent_course_id', '=', $parent_id)->where('college_id','=',$college_id)->orderBy('sort', 'DESC')->get();
-        $courseGroup = array();
-        foreach ($items as $item)
-        {
-            $courseGroup[] = ['id' => $item->course_id, 'name' => $item->course_name, 'sub_child' => self::CourseGroupChildList($college_id,$item->course_id)];
-        }
-
-        return $courseGroup;
-    }
-	public static function CourseGroupChildList($college_id,$parent_id)
-    {
-        $items = Course::where('parent_course_id', '=', $parent_id)->where('college_id','=',$college_id)->orderBy('sort', 'DESC')->get();
-        $courseGroupchildList = array();
-        foreach ($items as $item)
-        {
-            $courseGroupchildList[] = ['id' => $item->course_id, 'name' => $item->course_name,'duration'=>$item->course_duration];
-        }
-
-        return $courseGroupchildList;
-    }
-
+	
 	/**
 	 * Show the form for creating a new resource.
 	 * GET /college/create
