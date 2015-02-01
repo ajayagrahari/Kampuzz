@@ -41,7 +41,7 @@
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
-        <?php foreach ($collegeCourse as $key => $value) { ?>
+        <?php foreach ($data as $key => $value) { ?>
             
 <div class="top">
               <div class="table-responsive">
@@ -50,11 +50,13 @@
                     
                     <tbody><tr>
                       <td class="well" width="30%" colspan="2"><h4> <?php echo $value['name']; ?> </h4>
-                         <ul><?php foreach ($value['child'] as $key1 => $value1) { ?>
+                         <ul><?php foreach ($value['child'] as $key1 => $value1) {
+
+                          ?>
                          <li><b><?php echo $value1['name']; ?> </b>
                             <ul>
-                              <?php foreach ($value1['sub_child'] as $key2 => $value2) { ?>
-                              <li><?php echo $value2['name'].",".$value2['duration']; ?>
+                              <?php foreach ($value1['child'] as $key2 => $value2) { ?>
+                              <li><?php echo $value2; ?>
                               <?php } ?>
                             </ul>
 
@@ -160,7 +162,7 @@
            
         </div>
 
-<<<<<<< .merge_file_pZHU6A
+
 
 <script>
 $(function(){
@@ -170,12 +172,3 @@ $(function(){
 </script>
 
         @stop
-=======
-<script>
-$(function(){
-	$('.fadein img:gt(0)').hide();
-	setInterval(function(){$('.fadein :first-child').fadeOut().next('img').fadeIn().end().appendTo('.fadein');}, 3000);
-});
-</script>
-        @stop
->>>>>>> .merge_file_1ZRbWC
