@@ -37,8 +37,8 @@ class CollegeAbroadController extends \BaseController {
         }
     }
 
-$data=array();
-$data1=array();
+    $data=array();
+    $data1=array();
     foreach ($courseGroup as $key => $value) {
         $data1[$value['parent']['id']]['child'][$value['id']]=$value['name'];
         $data1[$value['parent']['id']]['name']=$value['parent']['name'];

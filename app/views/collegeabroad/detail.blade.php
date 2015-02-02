@@ -53,7 +53,7 @@
                          <ul><?php foreach ($value['child'] as $key1 => $value1) {
 
                           ?>
-                         <li><b><?php echo $value1['name']; ?> </b>
+                         <li><b><?php echo $value1['name']." (".count($value1['child']).")"; ?> </b>
                             <ul>
                               <?php foreach ($value1['child'] as $key2 => $value2) { ?>
                               <li><?php echo $value2; ?>
@@ -91,7 +91,9 @@
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Why Join <?php echo $collegeabroad_details->university_name; ?>  
+          
+
+    University highlights   
         </a>
       </h4>
     </div>
