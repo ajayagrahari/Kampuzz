@@ -41,49 +41,49 @@
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
-        <?php foreach ($data as $key => $value) { ?>
+        <?php $i=1; foreach ($data as $key => $value) { ?>
             
 <div class="top">
-              <div class="table-responsive">
-                <form>
-                  <table class="table table-bordered">
-                    
-                    <tbody><tr>
-                      <td class="well" width="30%" colspan="2"><h4> <?php echo $value['name']; ?> </h4>
-                         <ul><?php foreach ($value['child'] as $key1 => $value1) {
+  <div class="panel-group" id="accordionCourse" role="tablist" aria-multiselectable="true">
+            <h4> <?php echo $value['name']; ?> </h4>
+                         <ul><?php  foreach ($value['child'] as $key1 => $value1) {
 
                           ?>
-                         <li><b><?php echo $value1['name']." (".count($value1['child']).")"; ?> </b>
-                            <ul>
-                              <?php foreach ($value1['child'] as $key2 => $value2) { ?>
-                              <li><?php echo $value2; ?>
-                              <?php } ?>
-                            </ul>
+                          
+                         <li>
+                          <div class="panel panel-default">
+  
+    <div class="panel-heading" role="tab" id="headingCourse<?php echo $value['name'].++$i; ?>">
+      <h4 class="panel-title">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordionCourse" href="#collapseCourse<?php echo $value['name'].$i; ?>" aria-expanded="false" aria-controls="collapseCourse<?php echo $value['name'].$i; ?>">
+          
 
+    <b><?php echo $value1['name']." (".count($value1['child']).")"; ?> </b>  
+        </a>
+      </h4>
+    </div>
+    <div id="collapseCourse<?php echo $value['name'].$i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCourse<?php echo $value['name'].$i; ?>">
+      <div class="panel-body">
+        <ul>
+       <?php foreach ($value1['child'] as $key2 => $value2) { ?>
+                              <li><?php echo $value2; ?></li>
+                              <?php } ?>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+
+                         
                          </li>
 
                          <?php } ?>
                        </ul>
-                      </td>
-                    </tr>
-                    <!--  <tr>
-                      <td class="well" width="30%"><strong> Course Name </strong></td>
-                      <td><?php //echo $value->course_branch_name; ?> </td>                      
-                    </tr> -->
-                   <!--  <tr>
-                      <td class="well" width="30%"><strong> Total Fees </strong></td>
-                      <td><?php //echo $value->fees; ?> </td>                      
-                    </tr> -->
-                    
-                                       
-                  </tbody>
-
-              </table>
-                </form>
-              </div>
+                      
          </div>
-
-         <?php } ?>         
+        </div>
+         <?php   } ?>         
       </div>
     </div>
   </div>
