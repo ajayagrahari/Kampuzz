@@ -12,6 +12,8 @@ Route::get('/',array('as'=>'home','uses'=>'HomeController@index')) ;
 Route::get('courses/{id}-{slug?}/{parent_cat_id?}',array('as'=>'courses','uses'=>'CoursesController@index')) ;
 Route::get('courses/detail/{id}-{slug?}',array('as'=>'courses.detail','uses'=>'CoursesController@detail')) ;
 Route::get('college/{id?}-{slug?}',array('as'=>'college','uses'=>'CollegeController@index')) ;
+Route::get('collegeabroad/{id?}-{slug?}',array('as'=>'collegeabroad','uses'=>'CollegeAbroadController@index')) ;
+
 Route::get('abroad/courses/{country}/{id?}/{slug?}/{parent_cat_id?}',array('as'=>'courses.abroad','uses'=>'CoursesAbroadController@index')) ;
 Route::get('abroad/course-detail/{country}/{id}-{slug?}',array('as'=>'courses.abroad.detail','uses'=>'CoursesAbroadController@detail')) ;
 

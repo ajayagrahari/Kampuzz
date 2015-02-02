@@ -2,7 +2,9 @@
 @extends('layouts.main')
  <?php
     $breadcrumb_t = $course['course_name'];
+
 $breadcrumb_p = General::commafy([$course['university']['university_name'],$course['university']['city'],$course['university']['region'],$course['university']['country']]);
+$collegeabroad_detail_url=route('collegeabroad',['slug' => Str::slug($course['university']['university_name'] . '-' . $course['university']['city']),'id'=>$course['university']['univ_id']]);
   ?>
 
 @section('content')
@@ -196,6 +198,8 @@ $breadcrumb_p = General::commafy([$course['university']['university_name'],$cour
                 </li>
                 <?php } ?>
                 <li><a class="btn cs-buynow cs-bgcolr bgcolr" href="#">Request Contact Info</a></li>
+                <li><a class="btn cs-buynow cs-bgcolr bgcolr" href="<?php echo $collegeabroad_detail_url; ?>">View All Courses in the college</a></li>
+
             </ul>
         </div>
 

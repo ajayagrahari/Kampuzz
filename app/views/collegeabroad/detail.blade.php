@@ -1,4 +1,4 @@
-<?php $breadcrumb_t = $college_details->college_name;
+<?php $breadcrumb_t = $collegeabroad_details->university_name;
 // $breadcrumb_p = $course->college->college_name . ', ' . $course->college->city_name; 
 //$college_detail_url=route('college',['slug' => Str::slug($course->college->college_name . '-' . $course->college->city_name),'id'=>$course->college->college_id]);
 ?>
@@ -91,39 +91,42 @@
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Why Join <?php echo $college_details->college_name; ?>  
+          Why Join <?php echo $collegeabroad_details->university_name; ?>  
         </a>
       </h4>
     </div>
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
-        <?php if(isset($college_details->why_join)){ echo $college_details->why_join; } ?>
+        <?php if(isset($collegeabroad_details->university_highlights)){ echo $collegeabroad_details->university_highlights; } ?>
       </div>
     </div>
   </div>
-
-  <?php if(!empty($collegeFeature)){
-    $i=3;
-    foreach ($collegeFeature as $cf_key => $cf_value) { ?>
-    
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="heading<?php echo $i; ?>">
+  <?php if(!empty($univ_campuses)){ ?>
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="univ_campus">
       <h4 class="panel-title">
-        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $i; ?>" aria-expanded="false" aria-controls="collapse<?php echo $i; ?>">
-         <?php echo $cf_value['feature_title']; ?>   
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          University Campuses  
         </a>
       </h4>
     </div>
-    <div id="collapse<?php echo $i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?php echo $i; ?>">
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="univ_campus">
       <div class="panel-body">
-        <div class="item-desc">
-        
-           <?php echo $cf_value['feature_content']; ?> 
-            </div>
+        <table><tr><th>Campus Name</th><th>Address</th></tr>
+        <?php  
+        foreach ($univ_campuses as $key_campus => $value_campus) {
+         echo "<tr>";
+         echo "<td>".$value_campus['campus_name']."</td>";
+         echo "<td>".$value_campus['address']."</td>";
+          echo "</tr>";
+        }
+
+        ?>
+      </table>
       </div>
     </div>
   </div>
-<?php $i++; }} ?>
+ <?php } ?>
  
 
  
@@ -133,16 +136,14 @@
   <div class="addmition-info">
        <h2 class="header">Contact Info</h2>
           <div class="text">
-              <strong> Contact Person : </strong>
-              <span><?php echo $college_details->college_contact_person; ?> </span></br>
               <strong> Email : </strong>
-              <span><?php echo $college_details->college_email; ?> </span></br>
+              <span><?php echo $collegeabroad_details->email; ?> </span></br>
               <strong>Address : </strong>
-              <span><?php echo $college_details->college_address; ?> </span></br>
+              <span><?php echo $collegeabroad_details->address; ?> </span></br>
               <strong>Phone : </strong>
-              <span><?php echo $college_details->college_phone; ?> </span></br> 
+              <span><?php echo $collegeabroad_details->contact_no; ?> </span></br> 
               <strong>Website : </strong>
-              <span><?php echo $college_details->college_url; ?> </span></br>                       
+              <span><?php echo $collegeabroad_details->intl_website; ?> </span></br>                       
           </div>
    </div>
   <iframe src="https://www.google.com/maps/embed?pb=india" style="width:px;height:380px;" frameborder="0" style="border:0"></iframe>
