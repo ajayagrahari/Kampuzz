@@ -42,7 +42,8 @@
 	  	<div class="col-md-5">
 
 	  		<div class="socialLoginLinks clearfix"> 
-	  		 <button class="btn-social btn-fb" onclick="FB.initFBConnect();">Sign in with Facebook</button>   <button class="btn-social btn-google" id="google-login-button">Sign in with Google</button> </div>
+	  		 <button class="btn-social btn-fb" onClick="FBLogin();">Sign in with Facebook</button>   
+	  		 <button class="btn-social btn-google" id="google-login-button">Sign in with Google</button> </div>
 	  	</div>
 
 
