@@ -29,7 +29,12 @@ position:relative; height:300px; width:70%; margin:0 auto;
 
  }
 .fadein img { position:absolute;}
-
+.scrollable {
+max-height: 140px;
+overflow-y: auto;
+overflow-x: hidden;
+margin-right: -10px;
+}
 a {
 	color: #000;
 	text-decoration: none;

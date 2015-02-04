@@ -15,18 +15,24 @@ class CollegeAbroadController extends \BaseController {
 
         //return $college_details=College::where('college_id', '=', $id)->with('courses')->get()->toArray();
          $collegeabroad_details = AbroadUniversity::where('univ_id', '=', $id)->first();
-        
+            $univ_campuses = array() ;
+            $courseGroup = array();
+
+            $data=array();
+            $data1=array();
+            if($collegeabroad_details){
           $i = 0;
-        $univ_campuses = [] ;
+        
         foreach ($collegeabroad_details->campuses as $campuse)
         {
             $univ_campuses[$i]['campus_name'] = isset($campuse->campus_name) ? $campuse->campus_name : NULL;
             $univ_campuses[$i]['address'] = isset($campuse->address) ? $campuse->address : NULL;
+            $univ_campuses[$i]['url'] = isset($campuse->url) ? $campuse->url : NULL;
            
             $i++;
         }
        
-        $courseGroup = array();
+        
         foreach ($collegeabroad_details->courses as $item)
         {
             if($item->parent_course_id!=0){
@@ -37,8 +43,6 @@ class CollegeAbroadController extends \BaseController {
         }
     }
 
-    $data=array();
-    $data1=array();
     foreach ($courseGroup as $key => $value) {
         $data1[$value['parent']['id']]['child'][$value['id']]=$value['name'];
         $data1[$value['parent']['id']]['name']=$value['parent']['name'];
@@ -59,11 +63,10 @@ class CollegeAbroadController extends \BaseController {
             
         }
         }
-  
+        }
         
          return View::make('collegeabroad.detail', compact('collegeabroad_details','data','univ_campuses'));
-    }
-
+}
     
      public static function CourseGroupList($parent_id)
     {

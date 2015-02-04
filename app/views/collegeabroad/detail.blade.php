@@ -1,10 +1,14 @@
-<?php $breadcrumb_t = $collegeabroad_details->university_name;
+<?php $breadcrumb_t = isset($collegeabroad_details->university_name) ? $collegeabroad_details->university_name : NULL;
 // $breadcrumb_p = $course->college->college_name . ', ' . $course->college->city_name; 
 //$college_detail_url=route('college',['slug' => Str::slug($course->college->college_name . '-' . $course->college->city_name),'id'=>$course->college->college_id]);
 ?>
+
 @extends('layouts.main')
 @section('content')
 <!-- Row Start -->
+<?php
+if(isset($collegeabroad_details)){
+ ?>
             <div class="row">
 			 <!--Left Sidebar Starts-->
 						<!--Left Sidebar End-->
@@ -53,22 +57,24 @@
                          <li>
                           <div class="panel panel-default">
   
-    <div class="panel-heading" role="tab" id="headingCourse<?php echo $value['name'].++$i; ?>">
+    <div class="panel-heading" role="tab" id="headingCourse<?php echo ++$i; ?>">
       <h4 class="panel-title">
-        <a class="collapsed" data-toggle="collapse" data-parent="#accordionCourse" href="#collapseCourse<?php echo $value['name'].$i; ?>" aria-expanded="false" aria-controls="collapseCourse<?php echo $value['name'].$i; ?>">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordionCourse" href="#collapseCourse<?php echo $i; ?>" aria-expanded="false" aria-controls="collapseCourse<?php echo $i; ?>">
           
 
     <b><?php echo $value1['name']." (".count($value1['child']).")"; ?> </b>  
         </a>
       </h4>
     </div>
-    <div id="collapseCourse<?php echo $value['name'].$i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCourse<?php echo $value['name'].$i; ?>">
+    <div id="collapseCourse<?php echo $i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCourse<?php echo $i; ?>">
       <div class="panel-body">
-        <ul>
+       
+       <div class="scrollable"> <ul>
        <?php foreach ($value1['child'] as $key2 => $value2) { ?>
-                              <li><?php echo $value2; ?></li>
+                              <li><?php echo "=> ".$value2; ?></li>
                               <?php } ?>
         </ul>
+      </div>
       </div>
     </div>
 
@@ -114,17 +120,20 @@
     </div>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="univ_campus">
       <div class="panel-body">
-        <table><tr><th>Campus Name</th><th>Address</th></tr>
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered"><tr class="heading"><th width="80%">Campus Name</th><th>Address</th><th>URL</th></tr>
         <?php  
         foreach ($univ_campuses as $key_campus => $value_campus) {
          echo "<tr>";
          echo "<td>".$value_campus['campus_name']."</td>";
          echo "<td>".$value_campus['address']."</td>";
+          echo "<td>".$value_campus['url']."</td>";
           echo "</tr>";
         }
 
         ?>
       </table>
+    </div>
       </div>
     </div>
   </div>
@@ -173,6 +182,6 @@ $(function(){
   setInterval(function(){$('.fadein :first-child').fadeOut().next('img').fadeIn().end().appendTo('.fadein');}, 3000);
 });
 </script>
-
+<?php }else{ echo "oops.... page does not exist"; } ?>
         @stop
 
