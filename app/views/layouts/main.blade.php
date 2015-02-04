@@ -32,7 +32,7 @@
     <header id="header" class="headermain fullwidth">
         <div id="loginheader" class="fullwidth" style="text-align: right;">
             <div class="container">
-                <i class="fa fa-lock"></i> <a href="#">Login</a> | <i class="fa fa-user"></i> <a href="#">Create
+                <i class="fa fa-lock"></i> <a href="{{ URL::route('login') }}">Login</a> | <i class="fa fa-user"></i> <a href="#">Create
                     Account</a> | <i class="fa fa-briefcase"></i> <a href="#">Institution Login</a></div>
         </div>
         <!-- Main Header -->

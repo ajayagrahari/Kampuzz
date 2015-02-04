@@ -8,6 +8,7 @@
    echo $full_sql.'<br>
    ';
 });*/
+Route::get('/login',array('as'=>'login','uses'=>'LoginController@index')) ;
 Route::get('/',array('as'=>'home','uses'=>'HomeController@index')) ;
 Route::get('courses/{id}-{slug?}/{parent_cat_id?}',array('as'=>'courses','uses'=>'CoursesController@index')) ;
 Route::get('courses/detail/{id}-{slug?}',array('as'=>'courses.detail','uses'=>'CoursesController@detail')) ;

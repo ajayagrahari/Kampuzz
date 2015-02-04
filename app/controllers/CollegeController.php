@@ -15,12 +15,12 @@ class CollegeController extends \BaseController {
 
 		//return $college_details=College::where('college_id', '=', $id)->with('courses')->get()->toArray();
 		 $college_details = College::where('college_id', '=', $id)->first();
-		 // $collegeCourse=self::CourseGroup($id,0);
-		// echo "<pre>";
-		// print_r($collegeCourse);
-		// exit();
+		 $courseGroup = array();
+		 $data=array();
+		 $data1=array();
+		 $collegeFeature = array() ;
 		  $i = 0;
-        $collegeFeature = [] ;
+        if($college_details){
         foreach ($college_details->features as $feature)
         {
             $collegeFeature[$i]['feature_title'] = isset($feature->feature_title) ? $feature->feature_title : NULL;
@@ -29,7 +29,7 @@ class CollegeController extends \BaseController {
             $i++;
         }
 
-        $courseGroup = array();
+        
         foreach ($college_details->courses as $item)
         {
         	if($item->parent_course_id!=0){
@@ -40,8 +40,7 @@ class CollegeController extends \BaseController {
         }
     }
   
-$data=array();
-$data1=array();
+
     foreach ($courseGroup as $key => $value) {
     	$data1[$value['parent']['id']]['child'][$value['id']]=$value['name'];
     	$data1[$value['parent']['id']]['name']=$value['parent']['name'];
@@ -86,7 +85,7 @@ $data1=array();
            
         //     $j++;
         // }
-        
+        }
 		 return View::make('college.detail', compact('college_details','data','collegeFeature'));
 	}
 

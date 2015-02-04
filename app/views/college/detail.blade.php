@@ -1,10 +1,13 @@
-<?php $breadcrumb_t = $college_details->college_name;
+<?php $breadcrumb_t = isset($college_details->college_name)?$college_details->college_name: NULL;
 // $breadcrumb_p = $course->college->college_name . ', ' . $course->college->city_name; 
 //$college_detail_url=route('college',['slug' => Str::slug($course->college->college_name . '-' . $course->college->city_name),'id'=>$course->college->college_id]);
 ?>
 @extends('layouts.main')
 @section('content')
 <!-- Row Start -->
+<?php
+if(isset($college_details)){
+ ?>
             <div class="row">
 			 <!--Left Sidebar Starts-->
 						<!--Left Sidebar End-->
@@ -173,6 +176,6 @@ $(function(){
   setInterval(function(){$('.fadein :first-child').fadeOut().next('img').fadeIn().end().appendTo('.fadein');}, 3000);
 });
 </script>
-
+<?php }else{ echo "oops.... page does not exist"; } ?>
         @stop
 
