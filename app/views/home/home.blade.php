@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('content')
     <!-- Row Start -->
+    
     <div class="row">
         <div class="col-md-9 ">
             <div class="rich_editor_text"></div>

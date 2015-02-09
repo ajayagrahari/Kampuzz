@@ -274,7 +274,7 @@ class LoginController extends BaseController {
 			$token=Input::get('token');
 			$affectedRows = User::where('forget_password_key','=',$token)->update(array('password' => $password));
 			if($affectedRows>0){
-				return Redirect::to(route('home'));
+				return Redirect::to(route('home'))->with('message','Password reset successfully');
 			}
 			return "Failed";
 		}

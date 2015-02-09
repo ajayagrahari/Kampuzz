@@ -25,6 +25,23 @@
     {{ HTML::script('js/vendor/revslider/rs-plugin/js/jquery.themepunch.revolution.min.js') }}
 </head>
 <body>
+
+    @if(Session::get('message'))
+   
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+           <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body" id="success">
+          {{ Session::get('message') }}
+          
+        </div>
+      </div>
+    </div>
+
+@endif
     <div class="modal fade in " id="forgetpassword" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="false">
     <div class="modal-dialog modal-lg">
       <div class="modal-content ">
