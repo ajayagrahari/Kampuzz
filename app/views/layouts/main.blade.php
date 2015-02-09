@@ -25,100 +25,42 @@
     {{ HTML::script('js/vendor/revslider/rs-plugin/js/jquery.themepunch.revolution.min.js') }}
 </head>
 <body>
-    <div id="fb-root"></div>
+    <div class="modal fade in " id="forgetpassword" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+           <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body" id="recoverymessage">
+           
+          {{ Form::open(array('url' => 'forgetpassword', 'method' => 'get','id'=>'resetpassword')) }}
+           
+
+            <fieldset>
+             <label class="forget-pwd-label">
+                Enter your E-Mail address and we will send you a link to reset your password
+            </label>
+             <input id="forgetEmailAddress" type="email" name="email" class="form-control" placeholder="E-mail"> 
+             <button class="btn btn-primary" type="button" id="forgetPasswordButton">Send Link</button>
+            
+            </fieldset>
+        {{ Form::close() }}
+        </div>
+      </div>
+    </div>
+  </div>
 <script>
-function getCookie(c_name)
-     {
-        var c_value = document.cookie;
-        var c_start = c_value.indexOf(" " + c_name + "=");
-            if (c_start == -1)
-               { 
-               c_start = c_value.indexOf(c_name + "="); 
-               }
-            if (c_start == -1)
-               {
-               c_value = null; 
-               }
-           else { 
-               c_start = c_value.indexOf("=", c_start) + 1;
-               var c_end = c_value.indexOf(";", c_start);
-           if (c_end == -1) { c_end = c_value.length;}c_value = unescape(c_value.substring(c_start,c_end)); 
-                } 
-      return c_value;
-       }
-// This is the function using which we may store information in Browser Cookie
-function createCookie(name, value, days) {
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toGMTString();
-    }
-    else var expires = "";
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
+$( "#forgetPasswordButton" ).click(function() {
+    URL = "{{ url('forgetpassword').'?' ; }}" ;
+    val=$("#forgetEmailAddress").val();
 
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '1771027263122867',
-    status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
-  });
-
-  FB.Event.subscribe('auth.authResponseChange', function(response) {
-    // Here we specify what we do with the response anytime this event occurs. 
-    if (response.status === 'connected') {
-      getUserInfo();
-    } else if (response.status === 'not_authorized') {
-      FB.login();
-    } else {
-      FB.login();
-    }
-  });
-  };
-
-  // Load the SDK asynchronously
-  (function(d){
-   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   if (d.getElementById(id)) {return;}
-   js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "//connect.facebook.net/en_US/all.js";
-   ref.parentNode.insertBefore(js, ref);
-  }(document));
-
-  // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
-  function getUserInfo() { 
- 
-    FB.api('/me', function(response) {
-    
-         if (response.email){
-        
-         createCookie('email', response.email, 7) ;
-         createCookie('first_name', response.first_name, 7) ;
-         createCookie('last_name', response.last_name, 7) ;
-           createCookie('gender', response.gender, 7) ;
-           createCookie('birthday', response.birthday, 7) ;
-         // redirect to Step 1 of CV Builder
-          var fname = getCookie('first_name');
-           var lname = getCookie('last_name');
-           var email = getCookie('email');
-         alert("Welcome "+fname+" "+lname+" Your mail id :-"+email);
-         }
-
-    });
-  }
-  function FBLogin()
-  {
-    FB.login(function(response) {
-    if (response.authResponse) {
-        getUserInfo();
-    } else {
-        // The person cancelled the login dialog
-        alert('User cancelled login or did not fully authorize.'); 
-    }
-},{scope: 'email'});  
-  }
+  $.get( URL +"email="+val,function(data) {
+    console.log(data);
+                $('#recoverymessage').html(data) ;
+  }) ;
+  
+});
 </script>
 <!-- Wrapper Start -->
 <div class="wrapper wrapper_boxed" id="wrappermain-pix">
@@ -126,8 +68,15 @@ function createCookie(name, value, days) {
     <header id="header" class="headermain fullwidth">
         <div id="loginheader" class="fullwidth" style="text-align: right;">
             <div class="container">
-                <i class="fa fa-lock"></i> <a href="{{ URL::route('login') }}">Login</a> | <i class="fa fa-user"></i> <a href="#">Create
-                    Account</a> | <i class="fa fa-briefcase"></i> <a href="#">Institution Login</a></div>
+                @if (Auth::check())
+                        <i class="fa fa-user"></i><a href="{{ route('profile') }}"> {{ Auth::user()->name }}</a> |
+                        <a href="{{ route('logout') }}"> Log Out</a>
+                        @else
+                        <i class="fa fa-lock"></i> <a href="{{ route('login') }}">Login</a> | 
+                        <i class="fa fa-user"></i> <a href="{{ route('register') }}">Create Account</a> | 
+                        <i class="fa fa-briefcase"></i> <a href="#">Institution Login</a>
+                    @endif
+                </div>
         </div>
         <!-- Main Header -->
 

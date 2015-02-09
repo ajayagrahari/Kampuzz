@@ -77,5 +77,17 @@ App::down(function()
 | definitions instead of putting them all in the main routes file.
 |
 */
-
+App::bind('Hybrid_Auth', function() {
+    return new Hybrid_Auth(array(
+            "base_url"   => "http://localhost/Kampuzz/public/login/auth",
+            "providers" => array (
+                "OpenID" => array (
+                        "enabled" => true
+                ),
+                "Steam"  => array (
+                    "enabled" => true
+                )
+            )
+        ));
+});
 require app_path().'/filters.php';
